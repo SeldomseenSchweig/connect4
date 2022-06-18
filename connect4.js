@@ -24,7 +24,7 @@ function makeBoard() {
 
     for (let x = 0; x < WIDTH; x++) {
      
-       board[y][x]
+       board[y][x] = null;
         
     }
     
@@ -68,10 +68,9 @@ function makeHtmlBoard() {
 function findSpotForCol(x) {  
   
   for (let y = HEIGHT-1; y > 0 ; y--) { 
-    const place2 = document.getElementById(`${y}-${x}`);
-    console.log(place2.classList.contains('filled'));
 
-    if( !place2.classList.contains('filled') ){
+    if( board[y][x]===null ){
+      board[y][x] = currPlayer;
       return y;
     } 
   }
@@ -88,13 +87,10 @@ function placeInTable(y, x) {
   const piece = document.createElement("div");
   piece.classList.add("piece");
   const place = document.getElementById(`${y}-${x}`);
-  if (currPlayer === 1) {
-    piece.classList.add('player-one');
-  }else{
-    piece.classList.add('player-two');
-  }
+  
+  currPlayer === 1 ? piece.classList.add('player-one' ): piece.classList.add('player-two');
+  
   place.appendChild(piece);
-  place.classList.add('filled');
 }
 
 /** endGame: announce game end */
@@ -116,7 +112,7 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
+  
   placeInTable(y, x);
 
   // check for win
@@ -126,24 +122,11 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  (board).every((square)=>{ square === 'filled' ? endGame("It's a tie!") : currPlayer === 1 ? currPlayer = 2 : currPlayer = 1;  } )
 
-  for (let y = 0; y < HEIGHT; y++) {
 
-    for (let x = 0; x < WIDTH; x++) {
-     
-       board[y][x] === 'open';
-        // switch players
-        if (currPlayer === 1) {
-        currPlayer = 2;
-    } else {
-        currPlayer = 1;
-    }
-    
-       return;    
-    }
+  
 
-  }
-  endGame(msg);
   
 }
 
