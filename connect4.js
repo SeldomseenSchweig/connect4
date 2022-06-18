@@ -67,7 +67,7 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {  
   
-  for (let y = HEIGHT-1; y > 0 ; y--) { 
+  for (let y = HEIGHT-1; y > -1 ; y--) { 
 
     if( board[y][x]===null ){
       board[y][x] = currPlayer;
